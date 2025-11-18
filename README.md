@@ -208,8 +208,8 @@ MIT License
 
 ## Contact and Support
 
-- Report issues: 
-- Contact authors: 
+- Report issues: fu.zhanc@northeastern.edu
+- Contact authors: Jianfei Cao <j.cao@northeastern.edu> and Connor Dowd <cd@codowd.com>
 
 ## Changelog
 
@@ -222,3 +222,4 @@ MIT License
 ---
 
 **Note**: This package is under active development. Contributions and suggestions are welcome!
+
