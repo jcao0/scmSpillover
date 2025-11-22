@@ -22,6 +22,8 @@ install.packages("path/to/scmSpillover_0.1.1.tar.gz", repos = NULL, type = "sour
 ## Quick Start
 
 ```r
+library(scmSpillover)
+
 # View basic package information
 packageDescription("scmSpillover")
 
@@ -222,4 +224,5 @@ MIT License
 ---
 
 **Note**: This package is under active development. Contributions and suggestions are welcome!
+
 
