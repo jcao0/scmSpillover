@@ -29,16 +29,14 @@ packageDescription("scmSpillover")
 
 # List all functions in the package
 ls("package:scmSpillover")
+packageDescription("scmSpillover")
+help(package = "scmSpillover")
 ```
 
 ### Basic Example
 
 ```r
-library(scmSpillover)
-packageDescription("scmSpillover")
 data(cigs)
-help(package = "scmSpillover")
-
 result <- run_scm_spillover(
   data = cigs,
   treatment_start = 20,
@@ -50,10 +48,8 @@ print(result)
 summary(result)
 
 # Generate visualizations
-plots <- plot_all(result, 
-                  start_year = 1989,
-                  unit_name = "Treatment Unit",
-                  outcome_label = "Outcome Variable")
+# Plot with confidence bands.For other available plotting options, please refer to the visualization section.
+qplot_ci(result, start_year = 1989, unit_name = "California")
 ```
 
 ## Core Functions
@@ -78,23 +74,120 @@ Performs complete SCM analysis with spillover effects
 
 ### 2. Visualization Functions
 
-#### `plot_all()`
-Generates a complete set of analysis charts
+#### Quick Plotting Functions 
+
+`scmSpillover` now provides a comprehensive set of quick plotting functions for immediate visualization:
+
+##### `qplot_ci()` - Effects with Confidence Intervals
+```r
+# Quick plot with confidence bands
+qplot_ci(result, start_year = 1989, unit_name = "California")
+```
+
+##### `qplot_point()` - Clean Point Estimates
+```r
+# Plot without confidence bands for cleaner visualization
+qplot_point(result, start_year = 1989)
+```
+
+##### `qplot_compare()` - Method Comparison
+```r
+# Compare spillover-adjusted vs standard SCM
+qplot_compare(result, start_year = 1989)
+```
+
+##### `qplot_series()` - Time Series
+```r
+# Show actual vs synthetic control over time
+qplot_series(result, start_year = 1989, treatment_label = "Prop 99")
+```
+
+##### `qplot_all()` - All Plots in Sequence
+```r
+# Generate all three main plots with one command
+qplot_all(result, 
+          start_year = 1989,
+          show_ci = TRUE)  # Set FALSE for no confidence bands
+
+# Non-interactive version (no pause between plots)
+qplot_all(result, start_year = 1989, pause = FALSE)
+```
+
+##### `save_all_plots()` - Export All Visualizations
+```r
+# Save all plot variants to files
+save_all_plots(result,
+               start_year = 1989,
+               prefix = "california_analysis",
+               path = "figures/",
+               width = 10,
+               height = 6,
+               dpi = 300)
+# This creates:
+# - california_analysis_effects_ci.png
+# - california_analysis_effects_point.png
+# - california_analysis_method_comparison.png
+# - california_analysis_time_series.png
+```
+
+#### Traditional Plotting Functions
+
+##### `plot_all()` - Interactive Analysis Suite
+Generates three comprehensive charts with pause between each:
 
 ```r
 plots <- plot_all(
-  result,                    # Analysis result object
-  start_year = 2010,        # Start year (optional)
-  unit_name = "Beijing",     # Unit name
-  outcome_label = "GDP Growth Rate", # Outcome variable label
-  treatment_label = "Policy Implementation" # Treatment label
+  result,                    
+  start_year = 1989,        
+  unit_name = "California",     
+  outcome_label = "Cigarette Sales (packs per capita)",
+  treatment_label = "Proposition 99",
+  show_ci = TRUE  # New parameter to control confidence bands
 )
 ```
 
-Generates three charts:
-1. **Method Comparison Plot**: Compares spillover-adjusted SCM vs traditional SCM
-2. **Effect Confidence Interval Plot**: Shows statistical significance
-3. **Time Series Plot**: Actual values vs synthetic control
+This generates:
+1. **Method Comparison**: Spillover-adjusted vs Standard SCM effects
+2. **Treatment Effects with CI**: Point estimates with 95% confidence intervals (now without error bars, only ribbon)
+3. **Time Series**: Actual values vs synthetic control
+
+##### `plot_effects()` - Customizable Effect Plot
+```r
+# Basic effect plot with confidence intervals
+p1 <- plot_effects(result, 
+                   start_year = 1989,
+                   show_ci = TRUE,
+                   show_vanilla = FALSE)
+
+# Compare with vanilla SCM
+p2 <- plot_effects(result,
+                   start_year = 1989,
+                   show_ci = TRUE,
+                   show_vanilla = TRUE)  # Adds dashed line for standard SCM
+
+# Clean version without CI
+p3 <- plot_effects(result,
+                   start_year = 1989,
+                   show_ci = FALSE,
+                   show_vanilla = FALSE)
+```
+
+```
+
+#### Customization Options
+
+All plotting functions support these common parameters:
+- `start_year`: First year of treatment (for x-axis labeling)
+- `unit_name`: Name of treated unit for titles
+- `outcome_label`: Y-axis label
+- `treatment_label`: Label for treatment intervention (in time series plots)
+- `show_ci`: Whether to display confidence intervals (where applicable)
+
+The plots use a consistent color scheme:
+- **Spillover-adjusted effects**: Blue (#0072B2)
+- **Standard SCM**: Orange (#D55E00)
+- **Actual values**: Yellow-Orange (#E69F00)
+- **Zero reference line**: Red (dashed)
 
 ### 3. Low-level Functions
 
@@ -124,14 +217,9 @@ result_cigs <- run_scm_spillover(
   affected_units = c(1, 5, 6, 9, 15, 23, 24, 25, 29, 34, 35)
 )
 
-# Visualize results
-plots <- plot_all(
-  result_cigs,
-  start_year = 1989,
-  unit_name = "California",
-  outcome_label = "Per Capita Cigarette Sales (packs)",
-  treatment_label = "Proposition 99"
-)
+# Generate visualizations
+# Plot with confidence bands.For other available plotting options, please refer to the visualization section.
+qplot_ci(result, start_year = 1989, unit_name = "California")
 
 # Extract key results
 cat("Average Treatment Effect (with spillovers):", mean(result_cigs$spillover_effects), "\n")
@@ -210,19 +298,20 @@ MIT License
 
 ## Contact and Support
 
-- Report issues: fu.zhanc@northeastern.edu
+- Report issues: Zhanchao Fu <fu.zhanc@northeastern.edu>
 - Contact authors: Jianfei Cao <j.cao@northeastern.edu> and Connor Dowd <cd@codowd.com>
 
 ## Changelog
 
-### v0.1.0 (2025-11)
+### v0.1.1 (2025-11)
 - Initial release
 - Implemented core SCM spillover effect estimation
 - Added visualization functionality
 - Support for general panel data
-
+- Added multiple new plotting options
 ---
 
 **Note**: This package is under active development. Contributions and suggestions are welcome!
+
 
 
