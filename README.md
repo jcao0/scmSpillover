@@ -170,7 +170,7 @@ p3 <- plot_effects(result,
                    start_year = 1989,
                    show_ci = FALSE,
                    show_vanilla = FALSE)
-```
+```r
 
 ```
 
@@ -312,6 +312,7 @@ MIT License
 ---
 
 **Note**: This package is under active development. Contributions and suggestions are welcome!
+
 
 
 
