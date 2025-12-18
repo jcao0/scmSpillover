@@ -6,6 +6,16 @@
 \usage{
 \method{plot}{scm_spillover}(x, type = "effects", ...)
 }
+\arguments{
+\item{x}{An object of class scm_spillover}
+
+\item{type}{Type of plot: "effects" or "all"}
+
+\item{...}{Additional arguments passed to plotting functions}
+}
+\value{
+A ggplot object (invisibly for type="all")
+}
 \description{
 Plot method for scm_spillover objects
 }

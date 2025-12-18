@@ -6,6 +6,14 @@
 \usage{
 \method{summary}{scm_spillover}(object, ...)
 }
+\arguments{
+\item{object}{An object of class scm_spillover}
+
+\item{...}{Additional arguments (not used)}
+}
+\value{
+Invisibly returns a data frame with detailed results
+}
 \description{
 Summary method for scm_spillover objects
 }

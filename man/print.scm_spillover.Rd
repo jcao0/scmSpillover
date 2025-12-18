@@ -6,6 +6,14 @@
 \usage{
 \method{print}{scm_spillover}(x, ...)
 }
+\arguments{
+\item{x}{An object of class scm_spillover}
+
+\item{...}{Additional arguments (not used)}
+}
+\value{
+Invisibly returns the input object
+}
 \description{
 Print method for scm_spillover objects
 }
