@@ -29,14 +29,20 @@ packageDescription("scmSpillover")
 
 # List all functions in the package
 ls("package:scmSpillover")
-packageDescription("scmSpillover")
-help(package = "scmSpillover")
 ```
 
 ### Basic Example
 
 ```r
-data(cigs)
+library(scmSpillover)
+packageDescription("scmSpillover")
+
+# Load example data
+cigs_path <- system.file("extdata", "cigs.rda", package = "scmSpillover")
+load(cigs_path)
+
+help(package = "scmSpillover")
+
 result <- run_scm_spillover(
   data = cigs,
   treatment_start = 20,
@@ -60,7 +66,7 @@ qplot_ci(result, start_year = 1989, unit_name = "California")
 Performs complete SCM analysis with spillover effects
 
 **Parameters:**
-- `data`: Panel data matrix (periods × units)
+- `data`: Panel data matrix (periods x units)
 - `treatment_start`: Treatment start period (integer)
 - `treated_unit`: Column index of treated unit (default = 1)
 - `affected_units`: Vector of indices for all affected units
@@ -170,7 +176,7 @@ p3 <- plot_effects(result,
                    start_year = 1989,
                    show_ci = FALSE,
                    show_vanilla = FALSE)
-```r
+```
 
 ```
 
@@ -207,7 +213,8 @@ The plots use a consistent color scheme:
 
 ```r
 # Load cigarette sales data
-load("cigs.RData")
+cigs_path <- system.file("extdata", "cigs.rda", package = "scmSpillover")
+load(cigs_path)
 
 # Analyze Proposition 99 impact
 result_cigs <- run_scm_spillover(
@@ -217,9 +224,14 @@ result_cigs <- run_scm_spillover(
   affected_units = c(1, 5, 6, 9, 15, 23, 24, 25, 29, 34, 35)
 )
 
-# Generate visualizations
-# Plot with confidence bands.For other available plotting options, please refer to the visualization section.
-qplot_ci(result, start_year = 1989, unit_name = "California")
+# Visualize results
+plots <- plot_all(
+  result_cigs,
+  start_year = 1989,
+  unit_name = "California",
+  outcome_label = "Per Capita Cigarette Sales (packs)",
+  treatment_label = "Proposition 99"
+)
 
 # Extract key results
 cat("Average Treatment Effect (with spillovers):", mean(result_cigs$spillover_effects), "\n")
@@ -230,10 +242,12 @@ cat("Average Treatment Effect (traditional):", mean(result_cigs$vanilla_effects)
 
 ```r
 # Generate test data
-test_data <- matrix(rnorm(30*20, 100, 10), 30, 20)
-
-# Add treatment effect
-test_data[20:30, 1] <- test_data[20:30, 1] - 15
+test_data <- generate_test_data(
+  n_units = 20,
+  n_periods = 30,
+  treatment_start = 20,
+  effect_size = -15
+)
 
 # Run analysis
 result_test <- run_scm_spillover(
@@ -298,21 +312,24 @@ MIT License
 
 ## Contact and Support
 
-- Report issues: Zhanchao Fu <fu.zhanc@northeastern.edu>
+- Report issues: fu.zhanc@northeastern.edu
 - Contact authors: Jianfei Cao <j.cao@northeastern.edu> and Connor Dowd <cd@codowd.com>
 
 ## Changelog
 
-### v0.1.1 (2025-11)
+### v0.1.1 (2025-12)
+- Added comprehensive unit tests with testthat
+- Added `generate_test_data()` function for simulation studies
+- Improved documentation
+- Fixed non-ASCII character issues
+
+### v0.1.0 (2025-11)
 - Initial release
 - Implemented core SCM spillover effect estimation
 - Added visualization functionality
 - Support for general panel data
 - Added multiple new plotting options
+
 ---
 
 **Note**: This package is under active development. Contributions and suggestions are welcome!
-
-
-
-
