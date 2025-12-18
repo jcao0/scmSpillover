@@ -15,7 +15,7 @@ plot_all <- function(result,
                      treatment_label = "Treatment",
                      show_ci = TRUE) {
 
-  require(ggplot2)
+
 
   # Automatically generate the year or period
   n_post <- length(result$spillover_effects)
@@ -103,7 +103,7 @@ plot_all <- function(result,
     annotate("text",
              x = treatment_time - 1,
              y = max(df_series$Value) * 0.95,
-             label = paste(treatment_label, "→"),
+             label = paste(treatment_label, "->"),
              hjust = 1,
              size = 3.5) +
     scale_color_manual(values = c("#E69F00", "#0072B2")) +
@@ -145,7 +145,7 @@ plot_effects <- function(result,
                          show_ci = TRUE,
                          show_vanilla = FALSE) {
 
-  require(ggplot2)
+
 
   # Generate periods
   n_post <- length(result$spillover_effects)
@@ -209,9 +209,6 @@ plot_effects <- function(result,
   return(p)
 }
 
-# ========================================
-# Quick plotting functions (新增快速绘图函数)
-# ========================================
 
 #' Quick plot for treatment effects with confidence intervals
 #'
@@ -248,7 +245,7 @@ qplot_compare <- function(result,
                           unit_name = "Treated Unit",
                           outcome_label = "Outcome") {
 
-  require(ggplot2)
+
 
   # Generate periods
   n_post <- length(result$spillover_effects)
@@ -299,7 +296,7 @@ qplot_series <- function(result,
                          outcome_label = "Outcome",
                          treatment_label = "Treatment") {
 
-  require(ggplot2)
+
 
   # Calculate periods
   n_post <- length(result$spillover_effects)
@@ -336,7 +333,7 @@ qplot_series <- function(result,
     annotate("text",
              x = treatment_time - 1,
              y = max(df_series$Value) * 0.95,
-             label = paste(treatment_label, "→"),
+             label = paste(treatment_label, "->"),
              hjust = 1,
              size = 3.5) +
     scale_color_manual(values = c("#E69F00", "#0072B2")) +
@@ -451,7 +448,7 @@ save_all_plots <- function(result,
                            dpi = 300,
                            ...) {
 
-  require(ggplot2)
+
 
   # Create directory if it doesn't exist
   if (!dir.exists(path)) {

@@ -1,4 +1,7 @@
 #' Print method for scm_spillover objects
+#' @param x An object of class scm_spillover
+#' @param ... Additional arguments (not used)
+#' @return Invisibly returns the input object
 #' @export
 print.scm_spillover <- function(x, ...) {
   cat("\nSCM with Spillover Effects Results\n")
@@ -12,12 +15,14 @@ print.scm_spillover <- function(x, ...) {
 }
 
 #' Summary method for scm_spillover objects
+#' @param object An object of class scm_spillover
+#' @param ... Additional arguments (not used)
+#' @return Invisibly returns a data frame with detailed results
 #' @export
 summary.scm_spillover <- function(object, ...) {
   cat("\nDetailed SCM Analysis Summary\n")
   cat("==============================\n\n")
 
-  # Create a summary table
   results_df <- data.frame(
     Period = 1:length(object$spillover_effects),
     Spillover_Effect = round(object$spillover_effects, 3),
@@ -32,12 +37,16 @@ summary.scm_spillover <- function(object, ...) {
   cat("\n--- Statistical Summary ---\n")
   cat("Mean spillover effect:", round(mean(object$spillover_effects), 3), "\n")
   cat("Mean vanilla effect:", round(mean(object$vanilla_effects), 3), "\n")
-  cat("SD of spillover effects:", round(sd(object$spillover_effects), 3), "\n")
+  cat("SD of spillover effects:", round(stats::sd(object$spillover_effects), 3), "\n")
 
   invisible(results_df)
 }
 
 #' Plot method for scm_spillover objects
+#' @param x An object of class scm_spillover
+#' @param type Type of plot: "effects" or "all"
+#' @param ... Additional arguments passed to plotting functions
+#' @return A ggplot object (invisibly for type="all")
 #' @export
 plot.scm_spillover <- function(x, type = "effects", ...) {
   if (type == "effects") {
