@@ -24,3 +24,5 @@ RoxygenNote: 7.3.3
 Depends: 
     R (>= 3.5)
 Config/testthat/edition: 3
+URL: https://github.com/jcao0/scmSpillover
+BugReports: https://github.com/jcao0/scmSpillover/issues
