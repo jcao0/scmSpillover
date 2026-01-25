@@ -5,3 +5,5 @@
 ^\.git$
 ^\.gitignore$
 ^data-raw$
+^cran-comments\.md$
+^\.github$

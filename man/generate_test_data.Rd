@@ -20,6 +20,20 @@ generate_test_data(
 
 \item{effect_size}{Size of treatment effect}
 }
+\value{
+A numeric matrix with dimensions (n_periods x n_units).
+  The first column represents the treated unit, remaining columns are
+  control units. Rows represent time periods.
+}
 \description{
 Generate simulated data for testing
+}
+\examples{
+# Generate test data with default parameters
+data <- generate_test_data()
+dim(data)  # 30 periods x 20 units
+
+# Generate smaller dataset
+data <- generate_test_data(n_units = 10, n_periods = 20,
+                           treatment_start = 15, effect_size = -3)
 }

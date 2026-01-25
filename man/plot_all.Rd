@@ -26,6 +26,17 @@ plot_all(
 
 \item{show_ci}{Logical, whether to show confidence bands (default TRUE)}
 }
+\value{
+A list containing three ggplot objects (p1, p2, p3), returned
+  invisibly. Called primarily for side effects (displaying plots).
+}
 \description{
 Generate all plots for SCM analysis
+}
+\examples{
+\dontrun{
+  data <- generate_test_data()
+  result <- run_scm_spillover(data, treatment_start = 20)
+  plots <- plot_all(result)
+}
 }

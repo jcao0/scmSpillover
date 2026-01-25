@@ -26,6 +26,16 @@ plot_effects(
 
 \item{show_vanilla}{Logical, whether to show vanilla SCM comparison (default FALSE)}
 }
+\value{
+A ggplot object that can be further customized or saved.
+}
 \description{
 Plot treatment effects only
+}
+\examples{
+\donttest{
+  data <- generate_test_data()
+  result <- run_scm_spillover(data, treatment_start = 20, verbose = FALSE)
+  p <- plot_effects(result)
+}
 }
