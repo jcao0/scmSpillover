@@ -81,4 +81,4 @@ If you use the package or replication code, please cite the paper:
 ## Issues
 
 Bug reports and questions can be filed through the repository issue tracker:
-<https://github.com/jcao0/scmSpillover/issues>.
+<https://github.com/jcao0/synthetic-control-spillover/issues>.
